@@ -41,6 +41,7 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_PACKAGES += \
     EuiccResFuxi \
     FrameworkResOverlayFuxi \
+    FuxiWifiRes \
     SystemUIOverlayFuxi \
     SettingsOverlayFuxi
 
