@@ -35,6 +35,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init/init.fuxi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.fuxi.rc \
 
 # Overlay
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-lineage
+
 PRODUCT_PACKAGES += \
     EuiccResFuxi \
     FrameworkResOverlayFuxi \
