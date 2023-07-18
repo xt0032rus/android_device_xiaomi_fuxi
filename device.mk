@@ -475,7 +475,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/xiaomi \
-    kernel/xiaomi/sm8550
+    kernel/xiaomi/sm8550 \
+    kernel/xiaomi/sm8550-modules
 
 # Telephony
 PRODUCT_PACKAGES += \
