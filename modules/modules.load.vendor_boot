@@ -15,7 +15,6 @@ proxy-consumer.ko
 gcc-kalama.ko
 icc-rpmh.ko
 socinfo.ko
-icc-debug.ko
 icc-bcm-voter.ko
 camcc-kalama.ko
 qcom_ipcc.ko
