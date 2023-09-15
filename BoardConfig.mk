@@ -9,6 +9,10 @@ DEVICE_PATH := device/xiaomi/fuxi
 # Inherit from sm8550-common
 include device/xiaomi/sm8550-common/BoardConfigCommon.mk
 
+# Init
+TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_fuxi
+TARGET_RECOVERY_DEVICE_MODULES := libinit_fuxi
+
 # Display
 TARGET_SCREEN_DENSITY := 420
 
