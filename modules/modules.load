@@ -183,7 +183,6 @@ qcom-vadc-common.ko
 qcrypto-msm_dlkm.ko
 qdss_bridge.ko
 qmi_helpers.ko
-qrng_dlkm.ko
 qrtr-gunyah.ko
 qrtr-mhi.ko
 qrtr-smd.ko

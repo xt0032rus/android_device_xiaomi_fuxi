@@ -301,3 +301,4 @@ videocc-kalama.ko
 xiaomi_touch.ko
 zram.ko
 zsmalloc.ko
+hdcp_qseecom_dlkm.ko
