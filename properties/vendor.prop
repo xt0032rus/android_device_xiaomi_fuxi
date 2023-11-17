@@ -346,3 +346,6 @@ wifi.aware.interface=wifi-aware0
 
 # Partition source order for Product/Build properties pickup
 ro.product.property_source_order=odm,vendor,product,system_ext,system
+
+# shutdown
+ro.build.shutdown_timeout=0
