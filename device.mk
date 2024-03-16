@@ -238,6 +238,10 @@ PRODUCT_PACKAGES += \
     libhidltransport.vendor \
     libhwbinder.vendor
 
+# Google Battery HAL
+PRODUCT_PACKAGES += \
+    vendor.google.google_battery@1.1
+
 # Identity
 PRODUCT_PACKAGES += \
     android.hardware.identity-V4-ndk.vendor
