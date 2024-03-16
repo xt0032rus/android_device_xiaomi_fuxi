@@ -68,6 +68,9 @@ function blob_fixup() {
         odm/lib64/hw/displayfeature.default.so)
             "${PATCHELF}" --replace-needed "libstagefright_foundation.so" "libstagefright_foundation-v33.so" "${2}"
             ;;
+        odm/lib64/hw/vendor.xiaomi.sensor.citsensorservice@2.0-impl.so | odm/overlayfs/fuxi/odm/lib64/hw/vendor.xiaomi.sensor.citsensorservice@2.0-impl.so)
+            sed -i 's/_ZN13DisplayConfig10ClientImpl13ClientImplGetENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEPNS_14ConfigCallbackE/_ZN13DisplayConfig10ClientImpl4InitENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEPNS_14ConfigCallbackE\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0/g' "${2}"
+            ;;
         odm/lib64/libmt@1.3.so)
             "${PATCHELF}" --replace-needed "libcrypto.so" "libcrypto-v33.so" "${2}"
             ;;

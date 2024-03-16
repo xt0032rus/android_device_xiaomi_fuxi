@@ -1268,7 +1268,7 @@ vendor/etc/charger_fw_fstab.qti
 odm/bin/hw/vendor.xiaomi.sensor.citsensorservice@2.0-service
 odm/etc/init/vendor.xiaomi.sensor.citsensorservice@2.0-service.rc
 odm/etc/vintf/manifest/vendor.xiaomi.sensor.citsensorservice@2.0-service.xml
-odm/lib64/hw/vendor.xiaomi.sensor.citsensorservice@2.0-impl.so
+odm/lib64/hw/vendor.xiaomi.sensor.citsensorservice@2.0-impl.so:odm/overlayfs/fuxi/odm/lib64/hw/vendor.xiaomi.sensor.citsensorservice@2.0-impl.so|4ab2e17826548852ed37efe382de7d4bf27c45c7
 vendor/lib64/vendor.xiaomi.sensor.citsensorservice@1.1.so
 vendor/lib64/vendor.xiaomi.sensor.citsensorservice@2.0.so
 
@@ -1526,7 +1526,6 @@ vendor/etc/init/qdcmss.rc
 vendor/etc/snapdragon_color_libs_config.xml
 vendor/lib64/libbacklight-calib.so
 vendor/lib64/libdigital-dimming.so
-vendor/lib64/libdisplayconfig.qti.so
 vendor/lib64/libdpps.so
 vendor/lib64/libfeutils.so
 vendor/lib64/libgame_enhance.so
