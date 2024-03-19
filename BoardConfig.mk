@@ -80,13 +80,10 @@ BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
 
-TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_CLANG_VERSION := clang-r450784e
-TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/clang-r450784e
-KERNEL_LD := LD=ld.lld
-TARGET_KERNEL_SOURCE := kernel/xiaomi/sm8550
-TARGET_KERNEL_CONFIG := \
-    fuxi_defconfig
+TARGET_NO_KERNEL_OVERRIDE := true
+TARGET_KERNEL_SOURCE := device/xiaomi/fuxi-kernel/kernel-headers
+PRODUCT_COPY_FILES += \
+	$(KERNEL_PATH)/kernel:kernel
 
 # Kernel modules
 BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/system_dlkm/modules.load))
@@ -110,7 +107,13 @@ TARGET_RECOVERY_DEVICE_MODULES := libinit_fuxi
 
 # Dtb/o
 BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtb
+BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtb.img
+
+# Lineage Health
+TARGET_HEALTH_CHARGING_CONTROL_CHARGING_PATH := /sys/class/qcom-battery/input_suspend
+TARGET_HEALTH_CHARGING_CONTROL_CHARGING_ENABLED := 0
+TARGET_HEALTH_CHARGING_CONTROL_CHARGING_DISABLED := 1
+TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS := false
 
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
@@ -161,6 +164,11 @@ AUDIO_FEATURE_ENABLED_HW_ACCELERATED_EFFECTS := false
 
 TARGET_USES_QCOM_MM_AUDIO := true
 
+SOONG_CONFIG_NAMESPACES += android_hardware_audio
+SOONG_CONFIG_android_hardware_audio += \
+	run_64bit
+SOONG_CONFIG_android_hardware_audio_run_64bit := true
+
 # Platform
 TARGET_BOARD_PLATFORM := kalama
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno740
@@ -175,11 +183,11 @@ TARGET_USERIMAGES_SPARSE_F2FS_DISABLED := true
 TARGET_POWERHAL_MODE_EXT := $(DEVICE_PATH)/power/power-mode.cpp
 
 # Properties
-TARGET_ODM_PROP += $(DEVICE_PATH)/properties/odm.prop
-TARGET_PRODUCT_PROP += $(DEVICE_PATH)/properties/product.prop
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/properties/system.prop
-TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/properties/system_ext.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/properties/vendor.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/odm.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/product.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/system_ext.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
 # Recovery
 $(call soong_config_set, ufsbsg, ufsframework, bsg)
@@ -199,7 +207,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
 
 # Security patch level
-BOOT_SECURITY_PATCH := 2023-10-01
+BOOT_SECURITY_PATCH := 2024-03-01
 VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # Sensors
@@ -238,8 +246,7 @@ DEVICE_MANIFEST_KALAMA_FILES := \
 
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
     $(DEVICE_PATH)/configs/vintf/compatibility_matrix.device.xml \
-    $(DEVICE_PATH)/configs/vintf/compatibility_matrix.xiaomi.xml \
-    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
+    $(DEVICE_PATH)/configs/vintf/compatibility_matrix.xiaomi.xml
 
 # Vibrator
 $(call soong_config_set, XIAOMI_VIBRATOR, USE_EFFECT_STREAM, true)

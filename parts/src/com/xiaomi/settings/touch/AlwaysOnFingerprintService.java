@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Paranoid Android
+ * Copyright (C) 2023-2024 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -22,6 +22,9 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Display;
+
+import com.xiaomi.settings.utils.FileUtils;
 
 public class AlwaysOnFingerprintService extends Service {
 
@@ -30,6 +33,8 @@ public class AlwaysOnFingerprintService extends Service {
 
     private static final String SECURE_KEY_TAP = "doze_tap_gesture";
     private static final String SECURE_KEY_UDFPS = "screen_off_udfps_enabled";
+
+    private static final String FOD_PRESS_STATUS_PATH = "/sys/class/touch/touch_dev/fod_press_status";
 
     private boolean mIsAofEnabled;
 
@@ -70,28 +75,25 @@ public class AlwaysOnFingerprintService extends Service {
     private final class ScreenStateReceiver extends BroadcastReceiver {
         public void register() {
             if (DEBUG) Log.d(TAG, "ScreenStateReceiver: register");
+            registerReceiver(mScreenStateReceiver, new IntentFilter(Intent.ACTION_DISPLAY_STATE_CHANGED));
             registerReceiver(mScreenStateReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
             registerReceiver(mScreenStateReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
         }
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
-                case Intent.ACTION_SCREEN_ON:
-                    if (DEBUG) Log.d(TAG, "Received ACTION_SCREEN_ON");
-                    TfWrapper.setTouchFeature(
-                            new TfWrapper.TfParams(/*TOUCH_FOD_ENABLE*/ 10, 0));
-                    TfWrapper.setTouchFeature(
-                            new TfWrapper.TfParams(/*TOUCH_FODICON_ENABLE*/16, 0));
-                    break;
-                case Intent.ACTION_SCREEN_OFF:
-                    if (DEBUG) Log.d(TAG, "Received ACTION_SCREEN_OFF");
-                    TfWrapper.setTouchFeature(
-                            new TfWrapper.TfParams(/*TOUCH_FOD_ENABLE*/ 10, mIsAofEnabled ? 1 : 0));
-                    TfWrapper.setTouchFeature(
-                            new TfWrapper.TfParams(/*TOUCH_FODICON_ENABLE*/16, mIsAofEnabled ? 1 : 0));
-                    break;
+            if (DEBUG) Log.d(TAG, "onReceive: " + intent.getAction());
+            int displayState = getDisplay().getState();
+            boolean displayStateAof = displayState != Display.STATE_ON && mIsAofEnabled;
+            boolean displayStateDoze = displayState == Display.STATE_DOZE || displayState == Display.STATE_DOZE_SUSPEND;
+            if (FileUtils.readLineInt(FOD_PRESS_STATUS_PATH) == 1) {
+                if (DEBUG) Log.d(TAG, "onReceive: FOD active, dont update TOUCH_FOD_ENABLE!");
+            } else {
+                TfWrapper.setTouchFeature(
+                        new TfWrapper.TfParams(/*TOUCH_FOD_ENABLE*/ 10, displayStateAof ? 1 : 0));
             }
+            TfWrapper.setTouchFeature(
+                    new TfWrapper.TfParams(/*TOUCH_AOD_ENABLE*/ 11, displayStateDoze ? 1 : 0));
         }
     }
 

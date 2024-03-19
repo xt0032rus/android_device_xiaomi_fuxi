@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Paranoid Android
+ * Copyright (C) 2023-2024 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,7 +18,9 @@ import android.view.Display.HdrCapabilities;
 
 import com.xiaomi.settings.display.ColorModeService;
 import com.xiaomi.settings.doze.PocketDetectionService;
+import com.xiaomi.settings.doze.AodBrightnessService;
 import com.xiaomi.settings.touch.AlwaysOnFingerprintService;
+import com.xiaomi.settings.touch.TouchOrientationService;
 import com.xiaomi.settings.touch.TouchPollingRateService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
@@ -28,10 +30,21 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (!intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            return;
+        if (DEBUG) Log.i(TAG, "Received intent: " + intent.getAction());
+        switch (intent.getAction()) {
+            case Intent.ACTION_LOCKED_BOOT_COMPLETED:
+                onLockedBootCompleted(context);
+                break;
+            case Intent.ACTION_BOOT_COMPLETED:
+                onBootCompleted(context);
+                break;
         }
-        if (DEBUG) Log.d(TAG, "Received boot completed intent");
+    }
+
+    private static void onLockedBootCompleted(Context context) {
+        // AOD
+        context.startServiceAsUser(new Intent(context, AodBrightnessService.class),
+                UserHandle.CURRENT);
 
         // Display
         context.startServiceAsUser(new Intent(context, ColorModeService.class),
@@ -44,6 +57,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         // Touchscreen
         context.startServiceAsUser(new Intent(context, AlwaysOnFingerprintService.class),
                 UserHandle.CURRENT);
+        context.startServiceAsUser(new Intent(context, TouchOrientationService.class),
+                UserHandle.CURRENT);
         context.startServiceAsUser(new Intent(context, TouchPollingRateService.class),
                 UserHandle.CURRENT);
 
@@ -52,5 +67,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         displayManager.overrideHdrTypes(Display.DEFAULT_DISPLAY, new int[]{
                 HdrCapabilities.HDR_TYPE_DOLBY_VISION, HdrCapabilities.HDR_TYPE_HDR10,
                 HdrCapabilities.HDR_TYPE_HLG, HdrCapabilities.HDR_TYPE_HDR10_PLUS});
+    }
+
+    private static void onBootCompleted(Context context) {
     }
 }
