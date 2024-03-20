@@ -1418,13 +1418,11 @@ vendor/bin/hw/vendor.qti.hardware.capabilityconfigstore@1.0-service
 vendor/etc/init/vendor.qti.hardware.capabilityconfigstore@1.0-service.rc
 vendor/lib64/hw/vendor.qti.hardware.capabilityconfigstore@1.0-impl.so
 
-# Connection Security
-vendor/bin/qwesd
-vendor/bin/ssgqmigd64
+# SSGTZ
 vendor/bin/ssgtzd
-vendor/etc/init/qwesd.rc
 vendor/etc/init/ssgtzd.rc
-vendor/etc/seccomp_policy/qwesd@2.0.policy
+vendor/etc/ssg/ta_config.json
+vendor/etc/ssg/tz_whitelist.json
 
 # Diag
 system_ext/lib64/libdiag_system.qti.so
@@ -2467,7 +2465,6 @@ vendor/etc/seccomp_policy/atfwd@2.0.policy
 vendor/etc/seccomp_policy/imsrtp.policy
 vendor/etc/seccomp_policy/qcrilnr@2.0.policy
 vendor/etc/seccomp_policy/qms.policy
-vendor/etc/ssg/tz_whitelist.json
 vendor/etc/vintf/manifest/android.hardware.radio.config.xml
 vendor/etc/vintf/manifest/android.hardware.radio.data.xml
 vendor/etc/vintf/manifest/android.hardware.radio.messaging.xml
@@ -2647,7 +2644,6 @@ vendor/lib64/vendor.qti.imsrtpservice@3.1-service-Impl.so
 vendor/lib64/vendor.qti.imsrtpservice@3.1.so
 
 # SMC Invoke
-vendor/etc/ssg/ta_config.json
 vendor/lib64/libminkdescriptor.so
 vendor/lib64/libminksocket_vendor.so
 vendor/lib64/libnative-api.so
