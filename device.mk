@@ -72,8 +72,21 @@ PRODUCT_PACKAGES += \
 # Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/audio_effects.xml \
+    $(LOCAL_PATH)/configs/audio/sku_kalama_qssi/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/audio_effects.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio/bluetooth/bluetooth_qti_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_qti_audio_policy_configuration.xml \
+    $(LOCAL_PATH)/configs/audio/bluetooth/bluetooth_qti_hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_qti_hearing_aid_audio_policy_configuration.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio/sku_kalama/mixer_paths_kalama_mtp.xml:$(TARGET_COPY_OUT_ODM)/etc/audio/mixer_paths_kalama_mtp.xml \
+    $(LOCAL_PATH)/configs/audio/sku_kalama/mixer_paths_overlay_dynamic.xml:$(TARGET_COPY_OUT_ODM)/etc/audio/mixer_paths_overlay_dynamic.xml \
+    $(LOCAL_PATH)/configs/audio/sku_kalama/mixer_paths_overlay_static.xml:$(TARGET_COPY_OUT_ODM)/etc/audio/mixer_paths_overlay_static.xml \
+    $(LOCAL_PATH)/configs/audio/sku_kalama/resourcemanager_kalama_mtp.xml:$(TARGET_COPY_OUT_ODM)/etc/audio/resourcemanager_kalama_mtp.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio/audio_policy_engine_product_strategies.xml:$(TARGET_COPY_OUT_ODM)/etc/audio/audio_policy_engine_product_strategies.xml
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
@@ -96,7 +109,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth.audio-V2-ndk.vendor \
     android.hardware.bluetooth@1.1.vendor \
-    android.hardware.bluetooth.audio-impl \
+    android.hardware.bluetooth.audio@2.0-impl \
     vendor.qti.hardware.bluetooth.audio-V1-ndk.vendor \
     vendor.qti.hardware.bluetooth_audio@2.1.vendor \
     vendor.qti.hardware.btconfigstore@1.0.vendor \
@@ -321,19 +334,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/media/,$(TARGET_COPY_OUT_VENDOR)/etc)
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/codecs/media_codecs_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2_audio.xml \
-    $(LOCAL_PATH)/audio/codecs/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
-
 # Network
 PRODUCT_PACKAGES += \
     android.system.net.netd@1.1 \
@@ -395,7 +395,7 @@ PRODUCT_PACKAGES += \
     libgrpc++_unsecure.vendor
 
 PRODUCT_COPY_FILES += \
-    vendor/qcom/opensource/power/config/kalama/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
+    $(LOCAL_PATH)/configs/power/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
 
 # QTI
 PRODUCT_PACKAGES += \
@@ -514,8 +514,7 @@ PRODUCT_PACKAGES += \
     android.hardware.thermal@2.0.vendor
 
 PRODUCT_COPY_FILES += \
-$(LOCAL_PATH)/configs/thermal/thermal-engine.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine.conf \
-$(LOCAL_PATH)/configs/thermal/thermald-devices.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermald-devices.conf.conf
+$(LOCAL_PATH)/configs/thermal/thermald-devices.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermald-devices.conf
 
 # Touchscreen
 PRODUCT_COPY_FILES += \

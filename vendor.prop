@@ -343,7 +343,7 @@ ro.incremental.enable=yes
 ro.hardware.keystore_desede=true
 
 # HWUI
-ro.hwui.render_ahead=10
+ro.hwui.render_ahead=20
 
 # LMK
 persist.sys.miui.camera.boost.killAdj_threshold=251:200:100:50

@@ -38,5 +38,10 @@ RISING_RAM := 12gb
 WITH_GMS := true
 TARGET_ENABLE_BLUR := true
 
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRIVATE_BUILD_DESC="fuxi_global-user 13 TKQ1.221114.001 V14.0.6.0.UMCMIXM release-keys"
+
+BUILD_FINGERPRINT := Xiaomi/fuxi_global/fuxi:13/TKQ1.221114.001/V14.0.6.0.UMCMIXM:userdebug/test-keys
+
 # GMS
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
