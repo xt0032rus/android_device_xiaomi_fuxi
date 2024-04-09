@@ -33,6 +33,7 @@
 
 #define FOD_STATUS_OFF 0
 #define FOD_STATUS_ON 1
+#define FOD_STATUS_OFF_UNTIL_SUSPEND 3
 
 #define TOUCH_DEV_PATH "/dev/xiaomi-touch"
 #define TOUCH_MAGIC 'T'
@@ -241,7 +242,7 @@ class XiaomiSm8550UdfpsHander : public UdfpsHandler {
             req.local_hbm_value = LHBM_TARGET_BRIGHTNESS_OFF_FINGER_UP;
             ioctl(disp_fd_.get(), MI_DISP_IOCTL_SET_LOCAL_HBM, &req);
             if (!enrolling) {
-                setFodStatus(FOD_STATUS_OFF);
+                setFodStatus(FOD_STATUS_OFF_UNTIL_SUSPEND);
             }
         }
 
@@ -259,7 +260,7 @@ class XiaomiSm8550UdfpsHander : public UdfpsHandler {
         LOG(DEBUG) << __func__;
         enrolling = false;
 
-        setFodStatus(FOD_STATUS_OFF);
+        setFodStatus(FOD_STATUS_OFF_UNTIL_SUSPEND);
     }
 
     void preEnroll() {
@@ -276,7 +277,7 @@ class XiaomiSm8550UdfpsHander : public UdfpsHandler {
         LOG(DEBUG) << __func__;
         enrolling = false;
 
-        setFodStatus(FOD_STATUS_OFF);
+        setFodStatus(FOD_STATUS_OFF_UNTIL_SUSPEND);
     }
 
   private:
