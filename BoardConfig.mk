@@ -178,9 +178,6 @@ TARGET_USERIMAGES_SPARSE_EROFS_DISABLED := true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 TARGET_USERIMAGES_SPARSE_F2FS_DISABLED := true
 
-# Power
-TARGET_POWERHAL_MODE_EXT := $(DEVICE_PATH)/power/power-mode.cpp
-
 # Properties
 TARGET_ODM_PROP += $(DEVICE_PATH)/properties/odm.prop
 TARGET_PRODUCT_PROP += $(DEVICE_PATH)/properties/product.prop
@@ -208,6 +205,7 @@ VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # Sensors
 $(call soong_config_set, SENSORS_XIAOMI, USES_SINGLE_TAP_SENSOR, true)
+$(call soong_config_set, SENSORS_XIAOMI, USES_DOUBLE_TAP_SENSOR, true)
 $(call soong_config_set, SENSORS_XIAOMI, USES_UDFPS_SENSOR, true)
 
 # Sepolicy
