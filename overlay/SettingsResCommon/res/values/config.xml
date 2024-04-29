@@ -3,9 +3,6 @@
     <!-- Whether to show Smooth Display feature in Settings Options -->
     <bool name="config_show_smooth_display">true</bool>
 
-    <!-- Whether device supports increased touch sensitvity -->
-    <bool name="config_supportTouchPollingMode">true</bool>
-
     <!-- The radius of the enrollment progress bar, in dp -->
     <integer name="config_udfpsEnrollProgressBar">113</integer>
 
