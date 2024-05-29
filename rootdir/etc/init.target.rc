@@ -299,6 +299,12 @@ on early-boot
     chmod 0664 /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
 
 on boot
+# Touchscreen
+    chown system system /sys/class/touch/touch_dev/gesture_double_tap_enable
+    chown system system /sys/class/touch/touch_dev/gesture_single_tap_enable
+    chmod 0664 /sys/class/touch/touch_dev/gesture_double_tap_enable
+    chmod 0664 /sys/class/touch/touch_dev/gesture_single_tap_enable
+
     chmod 0666 /dev/input/event2
     chmod 0666 /dev/goodix_fp
     chown system system /dev/goodix_fp
