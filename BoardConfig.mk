@@ -63,12 +63,6 @@ BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 BOARD_KERNEL_CMDLINE := \
     video=vfb:640x400,bpp=32,memsize=3072000 \
     disable_dma32=on \
-    loop.max_part=7 \
-    msm_rtb.filter=0x237 \
-    pcie_ports=compat \
-    service_locator.enable=1 \
-    rcu_nocbs=all \
-    rcutree.enable_rcu_lazy=1 \
     swinfo.fingerprint=$(LINEAGE_VERSION) \
     mtdoops.fingerprint=$(LINEAGE_VERSION)
 
@@ -111,18 +105,13 @@ TARGET_KERNEL_EXT_MODULES := \
 	qcom/opensource/wlan/platform \
 	qcom/opensource/wlan/qcacld-3.0/.kiwi_v2 \
 	qcom/opensource/bt-kernel \
-	qcom/opensource/eSE-driver \
-	qcom/opensource/nfc-st-driver \
 	nxp/opensource/driver
 
 # Kernel modules
-BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.system_dlkm))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.vendor_blocklist.msm.kalama
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.vendor_boot))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.recovery))
-BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.recovery $(DEVICE_PATH)/modules/modules.include.vendor_ramdisk))
+BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.recovery))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.vendor_dlkm))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.first_stage))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD  := $(strip $(shell cat $(DEVICE_PATH)/modules/modules.load.recovery))
 
 # Init
 TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_fuxi
@@ -130,9 +119,8 @@ TARGET_RECOVERY_DEVICE_MODULES := libinit_fuxi
 
 # Dtb/o
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
-TARGET_NEEDS_DTBOIMAGE := true
-TARGET_MERGE_DTBS_WILDCARD ?= kalama*base
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
+BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilts/dtb
 
 # Lineage Health
 TARGET_HEALTH_CHARGING_CONTROL_CHARGING_PATH := /sys/class/qcom-battery/input_suspend
