@@ -449,6 +449,7 @@ PRODUCT_PACKAGES += \
     init.qcom.sh \
     init.recovery.qcom.rc \
     init.recovery.usb.rc \
+    init.perf.fuxi.rc \
     init.service.fuxi.rc \
     init.target.rc \
     init.udfps.fuxi.rc \
