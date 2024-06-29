@@ -113,6 +113,7 @@ TARGET_KERNEL_EXT_MODULES := \
 	qcom/opensource/bt-kernel \
 	qcom/opensource/eSE-driver \
 	qcom/opensource/nfc-st-driver \
+	qcom/opensource/touch-drivers \
 	nxp/opensource/driver
 
 # Kernel modules
