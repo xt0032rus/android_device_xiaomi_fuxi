@@ -26,8 +26,8 @@ TARGET_BUILD_FULLY_SIGN := true
 include vendor/parasite/signatures/BoardConfigSign.mk
 
 # SHIPPING API
-BOARD_SHIPPING_API_LEVEL := 32
-PRODUCT_SHIPPING_API_LEVEL := 32
+BOARD_SHIPPING_API_LEVEL := 31
+PRODUCT_SHIPPING_API_LEVEL := 31
 
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
@@ -160,6 +160,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.capabilityconfigstore@1.0.vendor
 
+# Consumer IR AIDL
+PRODUCT_PACKAGES += \
+    android.hardware.ir-service.example
+
 # DebugFS
 PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
 
@@ -168,6 +172,10 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.3.vendor \
     android.hardware.drm-service.clearkey \
     libdrm.vendor
+
+# Dolby
+PRODUCT_PACKAGES += \
+    XiaomiDolby
 
 # Fastbootd
 PRODUCT_PACKAGES += \
@@ -378,15 +386,6 @@ PRODUCT_PACKAGES += \
     WifiResTarget \
     WifiResTarget_spf
 
-# System properties
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/properties/build_CN.prop:$(TARGET_COPY_OUT_ODM)/etc/build_CN.prop \
-    $(LOCAL_PATH)/properties/build_GL.prop:$(TARGET_COPY_OUT_ODM)/etc/build_GL.prop
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/properties/build_CN.prop:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/odm/etc/build_CN.prop \
-    $(LOCAL_PATH)/properties/build_GL.prop:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/odm/etc/build_GL.prop
-
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
@@ -398,6 +397,7 @@ PRODUCT_PACKAGES += \
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2.vendor \
+    android.hardware.power-service.lineage-libperfmgr \
     libqti-perfd-client \
     libgrpc++_unsecure.vendor
 
@@ -465,9 +465,11 @@ PRODUCT_PACKAGES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-    android.hardware.sensors@2.1-service.xiaomi-multihal \
-    android.frameworks.sensorservice@1.0.vendor:64 \
-    libsensorndkbridge
+    android.frameworks.sensorservice@1.0.vendor \
+    android.hardware.sensors-service.xiaomi-multihal \
+    libsensorndkbridge \
+    sensor-notifier \
+    sensors.xiaomi
 
 PRODUCT_PACKAGES += \
     sensor-notifier
@@ -500,6 +502,7 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
+    XiaomiEuicc \
     extphonelib \
     extphonelib-product \
     extphonelib.xml \
@@ -552,8 +555,7 @@ PRODUCT_PACKAGES_DEBUG += \
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.3-service-qti \
-    android.hardware.usb.gadget@1.2-service-qti \
-    libusbhost.vendor:64
+    android.hardware.usb.gadget@1.2-service-qti
 
 PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
@@ -618,3 +620,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
+
+# PowerShare
+PRODUCT_PACKAGES += \
+    vendor.lineage.powershare@1.0-service.xiaomi  
