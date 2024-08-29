@@ -86,6 +86,15 @@ function blob_fixup() {
         vendor/etc/seccomp_policy/qwesd@2.0.policy)
             echo "pipe2: 1" >> "${2}"
             ;;
+        vendor/etc/media_codecs_c2_audio.xml)
+            sed -i '/media_codecs_dolby_audio/d' "${2}"
+            ;;
+        vendor/etc/media_codecs_cape.xml|vendor/etc/media_codecs_diwali_v0.xml|vendor/etc/media_codecs_diwali_v1.xml|vendor/etc/media_codecs_diwali_v2.xml|vendor/etc/media_codecs_taro.xml|vendor/etc/media_codecs_ukee.xml)
+            sed -i -E '/media_codecs_(google_audio|google_c2|google_telephony|vendor_audio)/d' "${2}"
+            ;;
+        vendor/etc/vintf/manifest/c2_manifest_vendor.xml)
+            sed -ni '/dolby/!p' "${2}"
+            ;;
     esac
 }
 

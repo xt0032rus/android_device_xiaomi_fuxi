@@ -6,17 +6,17 @@
 
 #define LOG_TAG "NonUiNotifier"
 
+#include "NonUiNotifier.h"
+
 #include <android-base/logging.h>
 #include <android-base/unique_fd.h>
+#include <linux/xiaomi_touch.h>
 #include <poll.h>
 #include <sys/ioctl.h>
 
-#include "NonUiNotifier.h"
 #include "SensorNotifierUtils.h"
 
-#include "xiaomi_touch.h"
-
-#define TOUCH_DEV_PATH "/dev/xiaomi-touch"
+static const std::string kTouchDevice = "/dev/xiaomi-touch";
 
 using android::hardware::Return;
 using android::hardware::Void;
@@ -27,9 +27,9 @@ namespace {
 class NonUiSensorCallback : public IEventQueueCallback {
   public:
     NonUiSensorCallback() {
-        touch_fd_ = android::base::unique_fd(open(TOUCH_DEV_PATH, O_RDWR));
+        touch_fd_ = android::base::unique_fd(open(kTouchDevice.c_str(), O_RDWR));
         if (touch_fd_.get() == -1) {
-            LOG(ERROR) << "failed to open " << TOUCH_DEV_PATH;
+            LOG(ERROR) << "failed to open " << kTouchDevice;
         }
     }
 
@@ -54,7 +54,7 @@ NonUiNotifier::~NonUiNotifier() {
     deactivate();
 }
 
-void NonUiNotifier::pollingFunction() {
+void NonUiNotifier::notify() {
     Result res;
 
     // Enable states of touchscreen sensors
@@ -95,7 +95,7 @@ void NonUiNotifier::pollingFunction() {
         } else {
             res = mQueue->disableSensor(mSensorHandle);
             if (res != Result::OK) {
-                LOG(ERROR) << "failed to disable sensor";
+                LOG(DEBUG) << "failed to disable sensor";
             }
         }
     }

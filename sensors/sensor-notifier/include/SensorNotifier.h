@@ -25,7 +25,7 @@ class SensorNotifier {
 
   protected:
     Result initializeSensorQueue(std::string typeAsString, bool wakeup, sp<IEventQueueCallback>);
-    virtual void pollingFunction() = 0;
+    virtual void notify() = 0;
 
     sp<IEventQueue> mQueue;
     int32_t mSensorHandle = -1;
@@ -33,5 +33,5 @@ class SensorNotifier {
 
   private:
     sp<ISensorManager> mManager;
-    std::thread mPollingThread;
+    std::thread mThread;
 };

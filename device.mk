@@ -22,9 +22,12 @@ $(call inherit-product, vendor/xiaomi/fuxi/fuxi-vendor.mk)
 # Add common definitions for Qualcomm
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
+TARGET_BUILD_FULLY_SIGN := true
+include vendor/parasite/signatures/BoardConfigSign.mk
+
 # SHIPPING API
-BOARD_SHIPPING_API_LEVEL := 31
-PRODUCT_SHIPPING_API_LEVEL := 31
+BOARD_SHIPPING_API_LEVEL := 32
+PRODUCT_SHIPPING_API_LEVEL := 32
 
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
@@ -52,8 +55,6 @@ PRODUCT_PACKAGES += \
     android.hardware.atrace@1.0-service
 
 # Audio
-$(call soong_config_set, android_hardware_audio, run_64bit, true)
-
 PRODUCT_PACKAGES += \
     android.hardware.audio@7.1-impl \
     android.hardware.audio.effect@7.0-impl \
@@ -79,10 +80,12 @@ PRODUCT_PACKAGES += \
     libtinycompress \
     libvolumelistener
 
-# Audio
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml
+$(foreach sku, kalama, \
+    $(eval PRODUCT_COPY_FILES += \
+        $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_$(sku)/audio_effects.xml \
+        $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/audio_policy_configuration.xml \
+        $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml \
+    ))
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/bluetooth_hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_hearing_aid_audio_policy_configuration.xml \
@@ -115,18 +118,18 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 2400
-TARGET_SCREEN_WIDTH := 1080
-
 # Boot control
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl-qti \
-    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-impl-qti:64 \
+    android.hardware.boot@1.2-impl-qti.recovery:64 \
     android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES_DEBUG += \
-    bootctl
+    bootctl:64
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2400
+TARGET_SCREEN_WIDTH := 1080
 
 # Camera
 $(call inherit-product-if-exists, vendor/xiaomi/camera/miuicamera.mk)
@@ -157,10 +160,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.capabilityconfigstore@1.0.vendor
 
-# Consumer IR AIDL
-PRODUCT_PACKAGES += \
-    android.hardware.ir-service.example
-
 # DebugFS
 PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
 
@@ -170,10 +169,6 @@ PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
     libdrm.vendor
 
-# Dolby
-PRODUCT_PACKAGES += \
-    XiaomiDolby
-
 # Fastbootd
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
@@ -182,7 +177,7 @@ PRODUCT_PACKAGES += \
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.3-service.xiaomi \
-    libudfpshandler
+    libudfpshandler:64
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
@@ -330,11 +325,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/codecs/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml
 
 PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
 
@@ -344,7 +334,6 @@ PRODUCT_PACKAGES += \
     liblz4.vendor \
     libjsoncpp.vendor \
     libsqlite.vendor \
-    libusbhost.vendor
 
 # Network
 PRODUCT_PACKAGES += \
@@ -389,6 +378,15 @@ PRODUCT_PACKAGES += \
     WifiResTarget \
     WifiResTarget_spf
 
+# System properties
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/properties/build_CN.prop:$(TARGET_COPY_OUT_ODM)/etc/build_CN.prop \
+    $(LOCAL_PATH)/properties/build_GL.prop:$(TARGET_COPY_OUT_ODM)/etc/build_GL.prop
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/properties/build_CN.prop:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/odm/etc/build_CN.prop \
+    $(LOCAL_PATH)/properties/build_GL.prop:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/odm/etc/build_GL.prop
+
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
@@ -400,7 +398,6 @@ PRODUCT_PACKAGES += \
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2.vendor \
-    android.hardware.power-service.lineage-libperfmgr \
     libqti-perfd-client \
     libgrpc++_unsecure.vendor
 
@@ -468,24 +465,28 @@ PRODUCT_PACKAGES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-    android.frameworks.sensorservice@1.0.vendor \
-    android.hardware.sensors-service.xiaomi-multihal \
-    libsensorndkbridge \
-    sensor-notifier \
-    sensors.xiaomi
+    android.hardware.sensors@2.1-service.xiaomi-multihal \
+    android.frameworks.sensorservice@1.0.vendor:64 \
+    libsensorndkbridge
+
+PRODUCT_PACKAGES += \
+    sensor-notifier
+    
+$(foreach sku, kalama, \
+    $(eval PRODUCT_COPY_FILES += \
+        frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.accelerometer.xml \
+        frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.compass.xml \
+        frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.gyroscope.xml \
+        frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.light.xml \
+        frameworks/native/data/etc/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.proximity.xml \
+        frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.stepcounter.xml \
+        frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_$(sku)/android.hardware.sensor.stepdetector.xml \
+    ))
 
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.accelerometer.xml \
-    frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.compass.xml \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.gyroscope.xml \
-    frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.light.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.stepcounter.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/sku_kalama/android.hardware.sensor.stepdetector.xml
-
-PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/sensors/hals.conf:$(TARGET_COPY_OUT_ODM)/etc/sensors/hals.conf \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
-
+    
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
@@ -499,7 +500,6 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
-    XiaomiEuicc \
     extphonelib \
     extphonelib-product \
     extphonelib.xml \
@@ -514,17 +514,17 @@ PRODUCT_PACKAGES += \
     qti-telephony-utils-prd \
     qti_telephony_utils.xml \
     qti_telephony_utils_prd.xml \
-    telephony-ext
+    telephony-ext \
+    xiaomi-telephony-stub
 
 PRODUCT_BOOT_JARS += \
-    telephony-ext
+    telephony-ext \
+    xiaomi-telephony-stub
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
-    frameworks/native/data/etc/android.hardware.telephony.euicc.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/android.hardware.telephony.euicc.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
-    frameworks/native/data/etc/android.hardware.telephony.mbms.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.mbms.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml
 
 PRODUCT_COPY_FILES += \
@@ -532,8 +532,6 @@ PRODUCT_COPY_FILES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0 \
-    android.hardware.thermal@2.0.vendor \
     android.hardware.thermal@2.0-service.qti-v2
 
 # Touchscreen
@@ -554,7 +552,8 @@ PRODUCT_PACKAGES_DEBUG += \
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.3-service-qti \
-    android.hardware.usb.gadget@1.2-service-qti
+    android.hardware.usb.gadget@1.2-service-qti \
+    libusbhost.vendor:64
 
 PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
@@ -577,11 +576,10 @@ PRODUCT_COPY_FILES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.vibrator.service.xiaomi \
-    android.hardware.vibrator-V1-ndk_platform.vendor
+    vendor.qti.hardware.vibrator.service
 
 PRODUCT_COPY_FILES += \
-    hardware/xiaomi/aidl/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
+    vendor/qcom/opensource/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
 
 # VNDK
 PRODUCT_COPY_FILES += \
@@ -590,14 +588,12 @@ PRODUCT_COPY_FILES += \
 
 # WiFi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi.hostapd-V1-ndk.vendor \
     android.hardware.wifi-service \
     android.hardware.wifi.hostapd@1.0.vendor \
-    android.hardware.wifi.supplicant-V1-ndk.vendor \
     hostapd \
     hostapd_cli \
-    libwifi-hal-qcom \
-    libwpa_client \
+    libwifi-hal-qcom:64 \
+    libwpa_client:64 \
     wpa_cli \
     wpa_supplicant \
     wpa_supplicant.conf
@@ -606,6 +602,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.aware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.aware.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
+    frameworks/native/data/etc/android.hardware.wifi.rtt.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.rtt.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml
 
 # WiFi firmware symlinks
@@ -616,13 +613,8 @@ PRODUCT_PACKAGES += \
 
 # WiFi Display
 PRODUCT_PACKAGES += \
-    android.media.audio.common.types-V2-cpp \
-    libnl \
-    libwfdaac_vendor
+    libnl:64 \
+    libwfdaac_vendor:64
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
-
-# PowerShare
-PRODUCT_PACKAGES += \
-    vendor.lineage.powershare@1.0-service.xiaomi    

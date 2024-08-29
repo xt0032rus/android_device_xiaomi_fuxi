@@ -6,9 +6,9 @@
 
 #define LOG_TAG "SensorNotifierUtils"
 
-#include <android-base/logging.h>
-
 #include "SensorNotifierUtils.h"
+
+#include <android-base/logging.h>
 
 bool readBool(int fd) {
     char c;

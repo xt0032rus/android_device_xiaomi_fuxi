@@ -1,3 +1,6 @@
+# Model-specific properties
+import /odm/etc/build_${ro.boot.hwc}.prop
+
 # Audio
 persist.audio.button_jack.profile=volume
 persist.audio.button_jack.switch=0

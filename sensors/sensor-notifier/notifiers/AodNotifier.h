@@ -14,5 +14,5 @@ class AodNotifier : public SensorNotifier {
     ~AodNotifier();
 
   protected:
-    void pollingFunction();
+    void notify();
 };
