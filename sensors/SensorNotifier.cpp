@@ -6,9 +6,9 @@
 
 #define LOG_TAG "SensorNotifier"
 
-#include "SensorNotifier.h"
-
 #include <android-base/logging.h>
+
+#include "SensorNotifier.h"
 
 using android::hardware::sensors::V1_0::SensorFlagBits;
 using android::hardware::sensors::V1_0::SensorInfo;
@@ -69,7 +69,7 @@ void SensorNotifier::activate() {
         return;
     }
     mActive = true;
-    mThread = std::thread(&SensorNotifier::notify, this);
+    mPollingThread = std::thread(&SensorNotifier::pollingFunction, this);
 }
 
 void SensorNotifier::deactivate() {
@@ -77,8 +77,8 @@ void SensorNotifier::deactivate() {
         return;
     }
     mActive = false;
-    if (mThread.joinable()) {
-        mThread.join();
+    if (mPollingThread.joinable()) {
+        mPollingThread.join();
     }
     if (mQueue != nullptr) {
         mQueue->disableSensor(mSensorHandle);

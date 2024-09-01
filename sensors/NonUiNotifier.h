@@ -14,5 +14,5 @@ class NonUiNotifier : public SensorNotifier {
     ~NonUiNotifier();
 
   protected:
-    void notify();
+    void pollingFunction();
 };

@@ -14,9 +14,9 @@
 #include <fstream>
 #include <thread>
 
-#include "xiaomi_touch.h"
 #include "mi_disp.h"
 #include "UdfpsHandler.h"
+#include "xiaomi_touch.h"
 
 #define COMMAND_NIT 10
 #define TARGET_BRIGHTNESS_OFF 0
@@ -31,8 +31,12 @@
 #define PARAM_FOD_PRESSED 1
 #define PARAM_FOD_RELEASED 0
 
-#define DISP_FEATURE_PATH "/dev/mi_display/disp_feature"
 #define TOUCH_DEV_PATH "/dev/xiaomi-touch"
+#define TOUCH_MAGIC 'T'
+#define TOUCH_IOC_SET_CUR_VALUE _IO(TOUCH_MAGIC, SET_CUR_VALUE)
+#define TOUCH_IOC_GET_CUR_VALUE _IO(TOUCH_MAGIC, GET_CUR_VALUE)
+
+#define DISP_FEATURE_PATH "/dev/mi_display/disp_feature"
 
 #define FOD_PRESS_STATUS_PATH "/sys/class/touch/touch_dev/fod_press_status"
 

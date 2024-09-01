@@ -6,17 +6,17 @@
 
 #define LOG_TAG "AodNotifier"
 
-#include "AodNotifier.h"
-
 #include <android-base/logging.h>
 #include <android-base/unique_fd.h>
-#include <display/drm/mi_disp.h>
 #include <poll.h>
 #include <sys/ioctl.h>
 
+#include "AodNotifier.h"
 #include "SensorNotifierUtils.h"
 
-static const std::string kDispFeatureDevice = "/dev/mi_display/disp_feature";
+#include <mi_disp.h>
+
+#define DISP_FEATURE_PATH "/dev/mi_display/disp_feature"
 
 using android::hardware::Return;
 using android::hardware::Void;
@@ -35,9 +35,9 @@ void requestDozeBrightness(int fd, __u32 doze_brightness) {
 class AodSensorCallback : public IEventQueueCallback {
   public:
     AodSensorCallback() {
-        disp_fd_ = android::base::unique_fd(open(kDispFeatureDevice.c_str(), O_RDWR));
+        disp_fd_ = android::base::unique_fd(open(DISP_FEATURE_PATH, O_RDWR));
         if (disp_fd_.get() == -1) {
-            LOG(ERROR) << "failed to open " << kDispFeatureDevice;
+            LOG(ERROR) << "failed to open " << DISP_FEATURE_PATH;
         }
     }
 
@@ -62,13 +62,12 @@ AodNotifier::~AodNotifier() {
     deactivate();
 }
 
-void AodNotifier::notify() {
+void AodNotifier::pollingFunction() {
     Result res;
 
-    android::base::unique_fd disp_fd_ =
-            android::base::unique_fd(open(kDispFeatureDevice.c_str(), O_RDWR));
+    android::base::unique_fd disp_fd_ = android::base::unique_fd(open(DISP_FEATURE_PATH, O_RDWR));
     if (disp_fd_.get() == -1) {
-        LOG(ERROR) << "failed to open " << kDispFeatureDevice;
+        LOG(ERROR) << "failed to open " << DISP_FEATURE_PATH;
     }
 
     // Register for power events
@@ -87,7 +86,7 @@ void AodNotifier::notify() {
     while (mActive) {
         int rc = poll(&dispEventPoll, 1, -1);
         if (rc < 0) {
-            LOG(ERROR) << "failed to poll " << kDispFeatureDevice << ", err: " << rc;
+            LOG(ERROR) << "failed to poll " << DISP_FEATURE_PATH << ", err: " << rc;
             continue;
         }
 
@@ -115,12 +114,16 @@ void AodNotifier::notify() {
                 }
                 break;
             case MI_DISP_POWER_ON:
+                res = mQueue->disableSensor(mSensorHandle);
+                if (res != Result::OK) {
+                    LOG(ERROR) << "failed to disable sensor";
+                }
                 requestDozeBrightness(disp_fd_.get(), DOZE_TO_NORMAL);
-                FALLTHROUGH_INTENDED;
+                break;
             default:
                 res = mQueue->disableSensor(mSensorHandle);
                 if (res != Result::OK) {
-                    LOG(DEBUG) << "failed to disable sensor";
+                    LOG(ERROR) << "failed to disable sensor";
                 }
                 break;
         }
