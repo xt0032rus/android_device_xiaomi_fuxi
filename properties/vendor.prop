@@ -142,7 +142,8 @@ sys.displayfeature_hidl=true
 ro.vendor.displayfeature.dump=true
 
 # Dolby
-ro.vendor.audio.dolby.dax.version=DAX3_3.8.5.20_r1
+vendor.audio.dolby.ds2.enabled=false
+vendor.audio.dolby.ds2.hardbypass=false
 
 # DPM
 persist.vendor.dpm.vndr.idletimer.mode=default
