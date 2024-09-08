@@ -469,7 +469,7 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors-service.xiaomi-multihal \
     libsensorndkbridge \
     sensor-notifier \
-    sensors.xiaomi
+    sensors.xiaomi.v2:64
 
 PRODUCT_PACKAGES += \
     sensor-notifier
@@ -486,7 +486,6 @@ $(foreach sku, kalama, \
     ))
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/sensors/hals.conf:$(TARGET_COPY_OUT_ODM)/etc/sensors/hals.conf \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
     
 # Soong namespaces
