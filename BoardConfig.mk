@@ -48,6 +48,9 @@ TARGET_OTA_ASSERT_DEVICE := fuxi,2211133C,2211133G
 # Display
 TARGET_SCREEN_DENSITY := 440
 $(call soong_config_set, qtidisplay, use_ycrcb_camera_encode, true)
+SOONG_CONFIG_NAMESPACES += dolby_vision
+SOONG_CONFIG_dolby_vision += enabled
+SOONG_CONFIG_dolby_vision_enabled := true
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/configs/config.fs
