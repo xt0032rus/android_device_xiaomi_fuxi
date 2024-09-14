@@ -501,6 +501,20 @@ PRODUCT_SOONG_NAMESPACES += \
     kernel/xiaomi/sm8550-modules
 
 # Telephony
+ifeq ($(WITH_GMS),true)
+PRODUCT_PACKAGES += \
+    EuiccGoogle
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/euicc/privapp-permissions-euiccgoogle.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-euiccgoogle.xml
+else
+PRODUCT_PACKAGES += \
+    OpenEUICC
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/euicc/privapp_whitelist_im.angry.openeuicc.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp_whitelist_im.angry.openeuicc.xml
+endif
+
 PRODUCT_PACKAGES += \
     XiaomiEuicc \
     extphonelib \
@@ -530,9 +544,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/euicc/privapp-permissions-euiccgoogle.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-euiccgoogle.xml
-    
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@2.0-service.qti-v2
