@@ -419,6 +419,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/perf/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
 
+# Quick Tap
+ifeq ($(TARGET_SUPPORTS_QUICK_TAP),true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.columbus.use_ap_sensor=true
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/quick_tap.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/quick_tap.xml
+else
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.columbus.use_ap_sensor=false
+endif
+
 # RenderScript
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
