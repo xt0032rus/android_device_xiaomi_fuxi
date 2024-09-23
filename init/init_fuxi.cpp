@@ -45,13 +45,20 @@ void set_ro_build_prop(const string &prop, const string &value) {
     }
 }
 
+void set_device_name(const string& name) {
+    // Construct the shell command to set device_name
+    string command = "settings put global device_name '" + name + "'";
+    // Execute the command
+    system(command.c_str());
+}
+
 void vendor_load_properties() {
     // Detect variant and override properties
     string region = GetProperty("ro.boot.hwc", "");
 
     if (region == "CN") { // China
-        set_ro_build_prop("model", "2211133C");
+        set_ro_build_prop("model", "Xiaomi 13");
     } else { // Global
-        set_ro_build_prop("model", "2211133G");
+        set_ro_build_prop("model", "Xiaomi 13");
     }
 }
