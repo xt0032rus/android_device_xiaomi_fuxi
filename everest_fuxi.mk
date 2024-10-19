@@ -9,14 +9,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit common LineageOS configurations
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+$(call inherit-product, vendor/everest/config/common_full_phone.mk)
 
 # Inherit device configurations
 $(call inherit-product, device/xiaomi/fuxi/device.mk)
 
 # Device identifier
 PRODUCT_DEVICE := fuxi
-PRODUCT_NAME := lineage_fuxi
+PRODUCT_NAME := everest_fuxi
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := Xiaomi13
 PRODUCT_MANUFACTURER := Xiaomi

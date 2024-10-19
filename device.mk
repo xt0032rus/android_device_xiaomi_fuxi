@@ -26,8 +26,8 @@ TARGET_BUILD_FULLY_SIGN := true
 include vendor/parasite/signatures/BoardConfigSign.mk
 
 # SHIPPING API
-BOARD_SHIPPING_API_LEVEL := 31
-PRODUCT_SHIPPING_API_LEVEL := 31
+BOARD_SHIPPING_API_LEVEL := 32
+PRODUCT_SHIPPING_API_LEVEL := 32
 
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
@@ -65,7 +65,6 @@ PRODUCT_PACKAGES += \
     libagm_pcm_plugin
 
 PRODUCT_PACKAGES += \
-    audio.primary.kalama \
     audio.bluetooth.default \
     audio.r_submix.default \
     audio.usb.default
@@ -292,10 +291,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.keystore.app_attest_key.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.keystore.app_attest_key.xml \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
 
-# Lineage Health
-PRODUCT_PACKAGES += \
-    vendor.lineage.health-service.default
-
 # Logging
 SPAMMY_LOG_TAGS := \
     MiStcImpl \
@@ -368,7 +363,7 @@ PRODUCT_COPY_FILES += \
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay-everest
 
 PRODUCT_PACKAGES += \
     CarrierConfigRes \
@@ -505,7 +500,7 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/google/interfaces \
     hardware/google/pixel \
-    hardware/lineage/interfaces/power-libperfmgr \
+    hardware/everest/interfaces/power-libperfmgr \
     hardware/qcom-caf/common/libqti-perfd-client \
     hardware/xiaomi \
     kernel/xiaomi/sm8550 \
