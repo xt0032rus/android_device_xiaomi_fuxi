@@ -609,6 +609,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
     android.hardware.wifi.hostapd@1.0.vendor \
+    android.hardware.wifi.hostapd-V1-ndk.vendor \
     hostapd \
     hostapd_cli \
     libwifi-hal-qcom:64 \
