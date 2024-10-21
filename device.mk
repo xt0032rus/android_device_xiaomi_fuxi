@@ -25,9 +25,12 @@ $(call inherit-product, hardware/qcom-caf/common/common.mk)
 TARGET_BUILD_FULLY_SIGN := true
 include vendor/parasite/signatures/BoardConfigSign.mk
 
+# Shim for missing symbols
+PRODUCT_PACKAGES += libshim
+
 # SHIPPING API
-BOARD_SHIPPING_API_LEVEL := 32
-PRODUCT_SHIPPING_API_LEVEL := 32
+BOARD_SHIPPING_API_LEVEL ?= 32
+PRODUCT_SHIPPING_API_LEVEL ?= 32
 
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
@@ -103,6 +106,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.automotive.vehicle@2.0-manager-lib
 
+# Freeform Multiwindow
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.freeform_window_management.xml
+
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth.audio-V2-ndk.vendor \
@@ -170,7 +177,8 @@ PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.3.vendor \
     android.hardware.drm-service.clearkey \
-    libdrm.vendor
+    libdrm.vendor \
+    libcrypto-v33
 
 # Dolby
 PRODUCT_PACKAGES += \
@@ -198,7 +206,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml
 
 PRODUCT_PACKAGES += \
-    android.hardware.gnss-V2-ndk.vendor
+    android.hardware.gnss-V2-ndk.vendor \
+    libloc_net_iface.vendor
 
 # Graphics
 PRODUCT_PACKAGES += \
@@ -321,7 +330,8 @@ PRODUCT_PACKAGES += \
     libcodec2_vndk.vendor \
     libgui_vendor \
     libsfplugin_ccodec_utils.vendor \
-    libstagefrighthw
+    libstagefrighthw \
+    libstagefright_softomx_plugin.vendor
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_codecs_dolby_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_dolby_audio.xml \

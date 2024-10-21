@@ -48,10 +48,6 @@ TARGET_OTA_ASSERT_DEVICE := fuxi,2211133C,2211133G
 
 # Display
 TARGET_SCREEN_DENSITY := 440
-$(call soong_config_set, qtidisplay, use_ycrcb_camera_encode, true)
-SOONG_CONFIG_NAMESPACES += dolby_vision
-SOONG_CONFIG_dolby_vision += enabled
-SOONG_CONFIG_dolby_vision_enabled := true
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/configs/config.fs
@@ -189,10 +185,10 @@ AUDIO_FEATURE_ENABLED_SVA_MULTI_STAGE := true
 BOARD_SUPPORTS_OPENSOURCE_STHAL := false
 BOARD_SUPPORTS_SOUND_TRIGGER := true
 BOARD_USES_ALSA_AUDIO := true
-TARGET_USES_QCOM_MM_AUDIO := true
 AUDIO_FEATURE_ENABLED_DTS_EAGLE := false
 AUDIO_FEATURE_ENABLED_HW_ACCELERATED_EFFECTS := false
 
+TARGET_PROVIDES_AUDIO_HAL ?= true
 TARGET_USES_QCOM_MM_AUDIO := true
 
 # Platform
@@ -239,14 +235,13 @@ TARGET_SENSOR_NOTIFIER_EXT ?= libsensor-notifier-ext
 $(call soong_config_set, xiaomiSm8550SensorVars, extensionLibs, $(TARGET_SENSOR_NOTIFIER_EXT))
 
 # Sepolicy
-SELINUX_IGNORE_NEVERALLOWS := true
 include device/qcom/sepolicy_vndr/SEPolicy.mk
 include device/everest/sepolicy/libperfmgr/sepolicy.mk
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
-# Verified Boot
+# Verified Bootа
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true

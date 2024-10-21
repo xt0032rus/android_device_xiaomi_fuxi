@@ -1891,7 +1891,6 @@ vendor/bin/hw/vendor.qti.media.c2audio@1.0-service
 vendor/etc/init/init.qti.media.rc
 vendor/etc/init/vendor.qti.media.c2@1.0-service.rc
 vendor/etc/init/vendor.qti.media.c2audio@1.0-service.rc
-vendor/etc/media_codecs.xml
 vendor/etc/media_codecs_c2_audio.xml
 vendor/etc/media_codecs_vendor_audio.xml
 vendor/etc/media_codecs_kalama.xml
@@ -2099,9 +2098,6 @@ vendor/lib64/nfc_nci.st21nfc.st.so
 vendor/lib64/vendor.nxp.hardware.nfc@2.0.so
 
 # OMX
-vendor/lib64/libAlacSwDec.so
-vendor/lib64/libApeSwDec.so
-vendor/lib64/libFlacSwDec.so
 vendor/lib64/libdsd2pcm.so
 
 # Peripheral manager
