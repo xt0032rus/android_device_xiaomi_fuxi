@@ -22,6 +22,8 @@ vendor.audio.use.sw.alac.decoder=true
 vendor.audio.use.sw.ape.decoder=true
 vendor.audio_hal.period_size=192
 vendor.voice.path.for.pcm.voip=true
+ro.config.media_vol_default=10
+ro.config.media_vol_steps=100
 
 # Radio
 ro.vendor.radio.5g=3
