@@ -29,8 +29,8 @@ include vendor/parasite/signatures/BoardConfigSign.mk
 PRODUCT_PACKAGES += libshim
 
 # SHIPPING API
-BOARD_SHIPPING_API_LEVEL ?= 32
-PRODUCT_SHIPPING_API_LEVEL ?= 32
+BOARD_SHIPPING_API_LEVEL := 34
+PRODUCT_SHIPPING_API_LEVEL := 34
 
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
@@ -138,7 +138,7 @@ TARGET_SCREEN_HEIGHT := 2400
 TARGET_SCREEN_WIDTH := 1080
 
 # Camera
-$(call inherit-product-if-exists, vendor/xiaomi/camera/miuicamera.mk)
+#$(call inherit-product-if-exists, vendor/xiaomi/camera/miuicamera.mk)
 
 PRODUCT_PACKAGES += \
     android.hardware.camera.common-V1-ndk.vendor \

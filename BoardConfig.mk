@@ -78,7 +78,6 @@ BOARD_KERNEL_CMDLINE := \
 BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
     androidboot.memcg=1 \
-    androidboot.selinux=permissive \
     androidboot.usbcontroller=a600000.dwc3
 
 BOARD_RAMDISK_USE_LZ4 := true
@@ -234,7 +233,8 @@ $(call soong_config_set, SENSORS_XIAOMI, USES_UDFPS_SENSOR, true)
 TARGET_SENSOR_NOTIFIER_EXT ?= libsensor-notifier-ext
 $(call soong_config_set, xiaomiSm8550SensorVars, extensionLibs, $(TARGET_SENSOR_NOTIFIER_EXT))
 
-# Sepolicy
+# SELinux
+SELINUX_IGNORE_NEVERALLOWS := true
 include device/qcom/sepolicy_vndr/SEPolicy.mk
 include device/everest/sepolicy/libperfmgr/sepolicy.mk
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
