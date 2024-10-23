@@ -70,7 +70,7 @@ BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 BOARD_KERNEL_CMDLINE := \
     video=vfb:640x400,bpp=32,memsize=3072000 \
     disable_dma32=on \
-    loop.max_part=7 \
+    loop.max_part=8 \
     msm_rtb.filter=0x237 \
     pcie_ports=compat \
     service_locator.enable=1 \
