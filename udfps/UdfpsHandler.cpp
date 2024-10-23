@@ -204,7 +204,7 @@ class XiaomiSm8550UdfpsHander : public UdfpsHandler {
     }
 
     void onAcquired(int32_t result, int32_t vendorCode) {
-        LOG(DEBUG) << __func__ << " result: " << result << " vendorCode: " << vendorCode;
+        LOG(INFO) << __func__ << " result: " << result << " vendorCode: " << vendorCode;
         if (result == FINGERPRINT_ACQUIRED_GOOD) {
             setFingerDown(false);
         }
