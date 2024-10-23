@@ -435,6 +435,9 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.columbus.use_ap_sensor=false
 endif
 
+# Blur
+TARGET_ENABLE_BLUR := true
+
 # RenderScript
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
