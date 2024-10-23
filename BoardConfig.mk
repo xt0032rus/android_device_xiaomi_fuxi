@@ -82,6 +82,7 @@ BOARD_KERNEL_CMDLINE := \
 BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
     androidboot.memcg=1 \
+    androidboot.init_fatal_reboot_target=recovery \
     androidboot.usbcontroller=a600000.dwc3
 
 BOARD_RAMDISK_USE_LZ4 := true
