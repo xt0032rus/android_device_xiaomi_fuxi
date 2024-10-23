@@ -32,7 +32,7 @@ AB_OTA_PARTITIONS += \
 TARGET_OTA_ADDITIONAL_OPTIONS := \
     --enable_lz4diff=true \
     --enable_vabc_xor=true
-    
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv9-a
@@ -171,6 +171,9 @@ BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext system_dlkm pro
 BOARD_PARTITION_LIST := $(call to-upper, $(BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST))
 $(foreach p, $(BOARD_PARTITION_LIST), $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := ext4))
 $(foreach p, $(BOARD_PARTITION_LIST), $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
+
+# Allow LZ4 compression
+BOARD_RAMDISK_USE_LZ4 := true
 
 # Audio
 $(call soong_config_set, android_hardware_audio, run_64bit, true)
