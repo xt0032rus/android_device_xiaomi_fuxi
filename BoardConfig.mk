@@ -10,7 +10,6 @@ DEVICE_PATH := device/xiaomi/fuxi
 include device/xiaomi/sm8550-common/BoardConfigCommon.mk
 
 # Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_fuxi
 TARGET_RECOVERY_DEVICE_MODULES := libinit_fuxi
 
 # Display
