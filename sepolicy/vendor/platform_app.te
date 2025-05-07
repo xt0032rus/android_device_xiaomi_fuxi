@@ -1,0 +1,2 @@
+# Touchfeature
+allow platform_app hal_touchfeature_xiaomi_hwservice:hwservice_manager find;

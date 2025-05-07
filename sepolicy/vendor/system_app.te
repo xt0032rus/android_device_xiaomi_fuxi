@@ -1,0 +1,5 @@
+# Touchfeature
+allow system_app touchfeature_device:chr_file rw_file_perms;
+allow system_app touchfeature_device:file { getattr map read };
+get_prop(system_app, vendor_touchfeature_prop)
+hal_client_domain(system_app, hal_touchfeature_xiaomi)

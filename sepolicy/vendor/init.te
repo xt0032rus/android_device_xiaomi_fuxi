@@ -1,0 +1,6 @@
+# Touchfeature
+allow init tpevent_exec:file { execute getattr open read };
+allow init tpevent:process { rlimitinh siginh transition };
+allow init touchreport_exec:file { execute getattr open read };
+allow init touchreport:process { rlimitinh siginh transition };
+set_prop(vendor_init, vendor_touchfeature_prop)

@@ -1,0 +1,6 @@
+# Touchfeature
+persist.vendor.hostprocess.waterproof           u:object_r:vendor_touch_hostprocess_prop:s0
+persist.vendor.touchfeature.                    u:object_r:vendor_touchfeature_prop:s0
+ro.vendor.touchfeature.type                     u:object_r:vendor_touchfeature_prop:s0
+vendor.panel.                                   u:object_r:vendor_panel_info_prop:s0
+vendor.touchfeature.                            u:object_r:vendor_touchfeature_prop:s0
