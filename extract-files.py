@@ -46,6 +46,11 @@ blob_fixups: blob_fixups_user_type = {
     ): blob_fixup()
         .regex_replace('com.instagram.android', ''),
     (
+    'odm/lib64/hw/vendor.xiaomi.hw.touchfeature@1.0-impl.so',
+    'odm/bin/hw/vendor.xiaomi.hw.touchfeature@1.0-service'
+    ): blob_fixup()
+        .replace_needed('vendor.xiaomi.hw.touchfeature@1.0.so', 'vendor.xiaomi.hw.touchfeature@1.0_vendor.so'),
+    (
         'odm/lib64/libcamxcommonutils.so',
         'odm/lib64/hw/com.qti.chi.override.so',
         'odm/lib64/libchifeature2.so',
