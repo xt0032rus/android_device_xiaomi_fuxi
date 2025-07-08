@@ -27,3 +27,6 @@
 /(vendor|system/vendor|odm|vendor/odm)/bin/toucheventcheck  u:object_r:tpevent_exec:s0
 /(vendor|system/vendor|odm|vendor/odm)/bin/touchsensor      u:object_r:touchreport_exec:s0
 /(vendor|system/vendor|odm|vendor/odm)/bin/hw/vendor\.xiaomi\.hw\.touchfeature@1\.0-service u:object_r:hal_touchfeature_xiaomi_default_exec:s0
+
+# Touchscreen
+/vendor/bin/hw/vendor\.lineage\.touch-service\.xiaomi      u:object_r:hal_lineage_touch_default_exec:s0

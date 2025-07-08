@@ -21,6 +21,9 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 	goodix_fod.ko \
 	fts_touch_spi.ko
 
+# Touchscreen
+$(call soong_config_set, XIAOMI_TOUCH, HIGH_TOUCH_POLLING_PATH, /sys/class/touch/touch_dev/high_touch_rate)
+
 # OTA
 TARGET_OTA_ASSERT_DEVICE := fuxi
 

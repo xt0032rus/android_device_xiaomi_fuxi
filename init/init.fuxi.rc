@@ -12,6 +12,8 @@ on boot
     chmod 0660 /sys/class/touch/touch_dev/gesture_double_tap_enabled
     chown system system /sys/class/touch/touch_dev/gesture_double_tap_state
     chmod 0664 /sys/class/touch/touch_dev/gesture_double_tap_state
+    chown system system /sys/class/touch/touch_dev/high_touch_rate
+    chmod 0664 /sys/class/touch/touch_dev/high_touch_rate
 
 # Euicc
 on post-fs && property:ro.boot.hwc=CN
