@@ -1208,25 +1208,9 @@ vendor/etc/thermal-engine.conf
 vendor/etc/thermal-map.conf
 vendor/etc/thermald-devices.conf
 
-# Touchscreen (Firmware)
-odm/firmware/st_fts_m2.ftb
-odm/firmware/stm_fts_production_limits.csv
-
-# Touchfeature
-odm/bin/hw/vendor.xiaomi.hw.touchfeature@1.0-service
-odm/bin/touch_raw
-odm/bin/touch_report
-odm/bin/toucheventcheck
-odm/bin/touchsensor
-odm/etc/init.panel_info.sh
-odm/etc/init/vendor.xiaomi.hw.touchfeature@1.0-service.rc
-odm/etc/vintf/manifest/vendor.xiaomi.hw.touchfeature@1.0-service.xml
-odm/firmware/film_model.tflite
-odm/firmware/glove_model.tflite
-odm/firmware/water_check.tflite
-odm/lib64/hw/vendor.xiaomi.hw.touchfeature@1.0-impl.so
-odm/lib64/libtensorflowlite_c.so
-vendor/lib64/vendor.xiaomi.hw.touchfeature@1.0.so;MODULE_SUFFIX=_vendor
+# Touchscreen (Firmware) - from thor OS2.0.1.0.VLACNXM
+odm/firmware/st_fts_l1.ftb|f258868a54503e0ad74d8b360a8501274c10ab9d
+odm/firmware/stm_fts_production_limits.csv|437fa1af33da23ef94107f07239435092baf58a8
 
 # Vibrator firmware
 odm/firmware/0_click_P_RTP.bin:vendor/etc/vibrator/effect_0.bin
