@@ -17,8 +17,12 @@ $(call inherit-product, vendor/infinity/config/common_full_phone.mk)
 PRODUCT_DEVICE := fuxi
 PRODUCT_NAME := infinity_fuxi
 PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := 2211133C
+PRODUCT_MODEL := Xiaomi 13
 PRODUCT_MANUFACTURER := Xiaomi
+
+INFINITY_MAINTAINER := xt0032rus
+TARGET_HAS_UDFPS := true
+WITH_GAPPS := true
 
 TARGET_BOOT_ANIMATION_RES := 1080
 
