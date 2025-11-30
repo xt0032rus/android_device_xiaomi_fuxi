@@ -48,13 +48,6 @@ PRODUCT_PACKAGES += \
     SettingsProviderResfuxi \
     SettingsOverlayFuxi
 
-# Sensors
-PRODUCT_PACKAGES += \
-    sensors.xiaomi.v2
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/hals.conf:$(TARGET_COPY_OUT_ODM)/etc/sensors/hals.conf
-
 # PowerShare
 $(call soong_config_set,lineage_powershare,powershare_path,/sys/class/qcom-battery/reverse_chg_mode)
 PRODUCT_PACKAGES += \
