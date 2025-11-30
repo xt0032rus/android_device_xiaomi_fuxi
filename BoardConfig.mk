@@ -31,9 +31,9 @@ $(call soong_config_set, XIAOMI_TOUCH, HIGH_TOUCH_POLLING_PATH, /sys/devices/vir
 TARGET_OTA_ASSERT_DEVICE := fuxi
 
 # Properties
-TARGET_ODM_PROP += $(DEVICE_PATH)/odm.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/config/prop/odm.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/config/prop/vendor.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/config/prop/system.prop
 
 # Sepolicy
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
