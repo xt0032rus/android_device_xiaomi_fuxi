@@ -24,6 +24,9 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 	goodix_fod.ko \
 	fts_touch_spi.ko
 
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD += \
+	fts_touch_spi.ko
+
 # OTA
 TARGET_OTA_ASSERT_DEVICE := fuxi
 
