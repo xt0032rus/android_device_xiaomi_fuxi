@@ -11,11 +11,11 @@ $(call inherit-product, build/make/target/product/core_64_bit.mk)
 # Inherit device-specific configurations
 $(call inherit-product, device/xiaomi/fuxi/device.mk)
 
-# Inherit PixelOS configurations
+# Inherit Project Infinity-X configurations
 $(call inherit-product, vendor/infinity/config/common_full_phone.mk)
 
 PRODUCT_DEVICE := fuxi
-PRODUCT_NAME := infinity
+PRODUCT_NAME := infinity_fuxi
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := 2211133C
 PRODUCT_MANUFACTURER := Xiaomi
