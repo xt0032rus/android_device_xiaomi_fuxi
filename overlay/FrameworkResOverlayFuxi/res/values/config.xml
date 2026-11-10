@@ -491,4 +491,7 @@
 
     <!-- AOD wallpaper -->
     <bool name="config_dozeSupportsAodWallpaper">true</bool>
+
+     <!-- Refresh rate to lock to in the low brightness zone defined above, to avoid gamma mismatch flicker on 60/120 Hz switches. -->
+    <integer name="config_defaultRefreshRateInZone">120</integer>
 </resources>
